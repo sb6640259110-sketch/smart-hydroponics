@@ -4,31 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Hydroponics Dashboard</title>
+    <!-- เพิ่มฟอนต์ Prompt -->
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --bg-color: #0b0f19;
-            --card-bg: #111827;
+            --bg-color: #0b1121;
+            --card-bg: #1e293b;
+            --card-border: rgba(255, 255, 255, 0.05);
             --accent-green: #10b981;
             --accent-blue: #3b82f6;
             --accent-yellow: #f59e0b;
             --accent-red: #ef4444;
-            --text-main: #f9fafb;
-            --text-sub: #9ca3af;
-            --border-color: #1f2937;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+            --shadow-glow: 0 0 15px rgba(16, 185, 129, 0.3);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Prompt', sans-serif; /* ใช้ฟอนต์ Prompt */
         }
 
         body {
             background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, transparent 70%);
             color: var(--text-main);
-            padding: 20px;
+            padding: 2rem 1.5rem;
             min-height: 100vh;
         }
 
@@ -37,188 +42,331 @@
             margin: 0 auto;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 24px;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: linear-gradient(145deg, var(--card-bg), rgba(15, 23, 42, 0.8));
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            box-shadow: var(--shadow-sm);
+            backdrop-filter: blur(10px);
         }
 
         /* Header Style */
         .header {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 20px 24px;
+            padding: 20px 28px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+            flex-wrap: wrap;
+            gap: 20px;
         }
 
         .header-title {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 16px;
+        }
+
+        .header-icon {
+            font-size: 2.2rem;
+            background: rgba(16, 185, 129, 0.1);
+            padding: 12px;
+            border-radius: 16px;
+            box-shadow: inset 0 0 10px rgba(16, 185, 129, 0.05);
         }
 
         .header-title h1 {
-            font-size: 1.5rem;
-            color: var(--accent-green);
+            font-size: 1.6rem;
+            font-weight: 600;
+            background: linear-gradient(to right, #4ade80, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 4px;
         }
 
         .header-title p {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: var(--text-sub);
+            font-weight: 300;
         }
 
         .status-badge {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 16px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 8px 16px;
+            border-radius: 30px;
+            border: 1px solid var(--card-border);
         }
 
         .btn-power {
             background-color: rgba(245, 158, 11, 0.1);
             color: var(--accent-yellow);
-            border: 1px solid var(--accent-yellow);
-            padding: 8px 16px;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            padding: 8px 20px;
             border-radius: 20px;
             cursor: pointer;
-            font-weight: 600;
-            font-size: 0.85rem;
-            transition: all 0.3s;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
         }
 
         .btn-power:hover {
             background-color: var(--accent-yellow);
-            color: #000;
+            color: #fff;
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
         }
 
         .online-dot {
-            width: 10px;
-            height: 10px;
+            width: 12px;
+            height: 12px;
             background-color: var(--accent-green);
             border-radius: 50%;
-            box-shadow: 0 0 8px var(--accent-green);
+            box-shadow: 0 0 10px var(--accent-green);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
         }
 
         /* Growth Tracking Card */
         .growth-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 24px;
+            padding: 28px;
         }
 
         .growth-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .growth-header h3 {
+            font-weight: 500;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .plant-select {
-            background-color: var(--bg-color);
+            background-color: #0f172a;
             color: var(--text-main);
-            border: 1px solid var(--border-color);
-            padding: 8px 12px;
-            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px 16px;
+            border-radius: 12px;
             outline: none;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+        
+        .plant-select:hover {
+            border-color: var(--accent-blue);
         }
 
         .progress-container {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            background: rgba(0,0,0,0.15);
+            padding: 24px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.02);
         }
 
         .progress-bar-bg {
-            background-color: var(--bg-color);
-            height: 12px;
-            border-radius: 6px;
+            background-color: rgba(255,255,255,0.05);
+            height: 14px;
+            border-radius: 8px;
             overflow: hidden;
-            margin-top: 8px;
-            margin-bottom: 12px;
+            margin-top: 12px;
+            margin-bottom: 16px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
         }
 
         .progress-bar-fill {
-            background: linear-gradient(90deg, var(--accent-blue), var(--accent-green));
+            background: linear-gradient(90deg, #3b82f6, #10b981);
             height: 100%;
             width: 40%;
-            border-radius: 6px;
-            transition: width 0.3s;
+            border-radius: 8px;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+            position: relative;
+        }
+        
+        .progress-bar-fill::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
         .timeline-labels {
             display: flex;
             justify-content: space-between;
-            font-size: 0.8rem;
-            color: var(--text-sub);
-        }
-
-        .slider-control {
-            margin-top: 15px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
             font-size: 0.85rem;
             color: var(--text-sub);
+            position: relative;
         }
 
-        .slider-control input[type="range"] {
+        .timeline-labels span {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            text-align: center;
+            flex: 1;
+        }
+
+        /* Custom Slider */
+        .slider-control {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 16px 20px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 0.95rem;
+            border: 1px solid rgba(255,255,255,0.02);
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
             flex-grow: 1;
-            accent-color: var(--accent-green);
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 5px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--accent-green);
+            transition: transform 0.1s;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
         }
 
         /* Sensor Grid */
         .grid-sensors {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
         }
 
         .sensor-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 20px;
+            padding: 24px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             position: relative;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
         }
 
+        .sensor-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: transparent;
+            transition: background 0.3s;
+        }
+
+        /* Colored top borders based on sensor type */
+        .sensor-card:nth-child(1)::before { background: linear-gradient(90deg, #f87171, #fb923c); }
+        .sensor-card:nth-child(2)::before { background: linear-gradient(90deg, #c084fc, #818cf8); }
+        .sensor-card:nth-child(3)::before { background: linear-gradient(90deg, #fbbf24, #f59e0b); }
+        .sensor-card:nth-child(4)::before { background: linear-gradient(90deg, #34d399, #10b981); }
+
         .sensor-card:hover {
-            transform: translateY(-2px);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.5);
+            border-color: rgba(255, 255, 255, 0.15);
         }
 
         .sensor-title {
             color: var(--text-sub);
-            font-size: 0.9rem;
-            margin-bottom: 15px;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
             display: flex;
             justify-content: space-between;
+            align-items: center;
         }
 
+        .icon-wrapper {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        
+        .ic-temp { background: rgba(248, 113, 113, 0.15); }
+        .ic-ph { background: rgba(192, 132, 252, 0.15); }
+        .ic-ec { background: rgba(251, 191, 36, 0.15); }
+        .ic-bat { background: rgba(52, 211, 153, 0.15); }
+
         .sensor-value {
-            font-size: 2.2rem;
-            font-weight: bold;
-            margin-bottom: 10px;
+            font-size: 2.8rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+        }
+
+        .sensor-value span {
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: var(--text-sub);
+        }
+
+        .sensor-footer {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
         .sensor-status {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
             width: fit-content;
         }
 
-        .status-good { background-color: rgba(16, 185, 129, 0.15); color: var(--accent-green); }
-        .status-warn { background-color: rgba(239, 68, 68, 0.15); color: var(--accent-red); }
+        .status-good { background-color: rgba(16, 185, 129, 0.15); color: var(--accent-green); border: 1px solid rgba(16, 185, 129, 0.2); }
+        .status-warn { background-color: rgba(239, 68, 68, 0.15); color: var(--accent-red); border: 1px solid rgba(239, 68, 68, 0.2); }
 
         .sensor-range {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             color: var(--text-sub);
-            margin-top: 8px;
         }
 
         /* Modal Graph */
@@ -226,34 +374,67 @@
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            opacity: 1;
         }
 
         .modal-content {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 24px;
+            background: #1e293b;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px;
+            padding: 30px;
             width: 90%;
-            max-width: 600px;
+            max-width: 700px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transform: translateY(20px);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .modal.show .modal-content {
+            transform: translateY(0);
         }
 
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .modal-header h3 {
+            font-weight: 500;
         }
 
         .close-btn {
-            background: none;
+            background: rgba(255,255,255,0.05);
             border: none;
             color: var(--text-sub);
-            font-size: 1.5rem;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.2rem;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        
+        .close-btn:hover {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--accent-red);
         }
     </style>
 </head>
@@ -261,30 +442,32 @@
 
     <div class="container">
         <!-- Header -->
-        <div class="header">
+        <div class="header glass-card">
             <div class="header-title">
-                <span style="font-size: 1.8rem;">🌱</span>
+                <div class="header-icon">🌱</div>
                 <div>
                     <h1>Smart Hydroponics</h1>
                     <p>ระบบควบคุมและติดตามการเจริญเติบโตอัจฉริยะ</p>
                 </div>
             </div>
             <div class="status-badge">
-                <button class="btn-power" id="powerBtn" onclick="togglePower()">⚡ AC Power (คลิกเพื่อเปลี่ยน)</button>
-                <div class="online-dot"></div>
-                <span style="font-size: 0.85rem; color: var(--accent-green);">Online</span>
+                <button class="btn-power" id="powerBtn" onclick="togglePower()">⚡ AC Power</button>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <div class="online-dot"></div>
+                    <span style="font-size: 0.9rem; font-weight: 500; color: var(--accent-green);">Online</span>
+                </div>
             </div>
         </div>
 
         <!-- Growth Tracker -->
-        <div class="growth-card">
+        <div class="growth-card glass-card">
             <div class="growth-header">
                 <div>
                     <h3>🌱 ติดตามการเติบโต</h3>
-                    <p style="font-size: 0.85rem; color: var(--text-sub);">ชนิดผัก: บัตเตอร์เฮด (Butterhead)</p>
+                    <p style="font-size: 0.9rem; color: var(--text-sub);">ติดตามและคาดการณ์รอบการเก็บเกี่ยว</p>
                 </div>
-                <div>
-                    <label style="font-size: 0.8rem; color: var(--text-sub);">เลือกประเภทผัก</label><br>
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <label style="font-size: 0.85rem; color: var(--text-sub);">สายพันธุ์ผักที่ปลูก</label>
                     <select class="plant-select" id="plantType" onchange="updatePlantType()">
                         <option value="45">บัตเตอร์เฮด (Butterhead) - 45 วัน</option>
                         <option value="40">กรีนโอ๊ค (Green Oak) - 40 วัน</option>
@@ -294,80 +477,80 @@
             </div>
 
             <div class="progress-container">
-                <div style="display: flex; justify-content: space-between; font-weight: 600; font-size: 0.9rem;">
-                    <span id="progressText">ความคืบหน้า (18 จาก 45 วัน)</span>
-                    <span id="progressPercent" style="color: var(--accent-green);">40%</span>
+                <div style="display: flex; justify-content: space-between; font-weight: 500; font-size: 0.95rem; margin-bottom: 5px;">
+                    <span id="progressText">ระยะการเติบโต (18 จาก 45 วัน)</span>
+                    <span id="progressPercent" style="color: var(--accent-green); font-weight: 600;">40%</span>
                 </div>
                 <div class="progress-bar-bg">
                     <div class="progress-bar-fill" id="progressBar"></div>
                 </div>
                 <div class="timeline-labels">
-                    <span>🌱 เพาะเมล็ด (Day 1)</span>
-                    <span>🌿 ย้ายลงแปลง (Day 16)</span>
-                    <span>🥬 เติบโตเร็ว (Day 31)</span>
-                    <span>🧺 เก็บเกี่ยว (<span class="max-day-text">Day 45</span>)</span>
+                    <span><small>🟢</small>เพาะเมล็ด<br><small style="color: #64748b;">(Day 1)</small></span>
+                    <span><small>🌿</small>ย้ายลงแปลง<br><small style="color: #64748b;">(Day 16)</small></span>
+                    <span><small>🥬</small>เติบโตเต็มที่<br><small style="color: #64748b;">(Day 31)</small></span>
+                    <span><small>🧺</small>เก็บเกี่ยว<br><small style="color: #64748b;" class="max-day-text">(Day 45)</small></span>
                 </div>
             </div>
 
             <div class="slider-control">
-                <span>จำลองอายุผัก:</span>
+                <span style="color: var(--text-sub); white-space: nowrap;">จำลองอายุ:</span>
                 <input type="range" id="ageSlider" min="1" max="45" value="18" oninput="updateAge(this.value)">
-                <span id="sliderValue" style="font-weight: bold; color: var(--accent-green);">18 วัน</span>
+                <span id="sliderValue" style="font-weight: 600; color: var(--accent-green); min-width: 50px;">18 วัน</span>
             </div>
         </div>
 
         <!-- Sensors Grid -->
         <div class="grid-sensors">
             <!-- Temp -->
-            <div class="sensor-card" onclick="openChart('อุณหภูมิน้ำ (°C)', [24.1, 24.3, 24.5, 24.2, 24.5])">
+            <div class="sensor-card glass-card" onclick="openChart('อุณหภูมิน้ำ', [24.1, 24.3, 24.5, 24.2, 24.5], '°C')">
                 <div class="sensor-title">
                     <span>อุณหภูมิน้ำ</span>
-                    <span>🌡️</span>
+                    <div class="icon-wrapper ic-temp">🌡️</div>
                 </div>
-                <div class="sensor-value">24.5 <span style="font-size: 1rem;">°C</span></div>
-                <div>
-                    <span class="sensor-status status-warn">สูงกว่าเกณฑ์</span>
-                    <div class="sensor-range">ช่วงเหมาะสม: 18-24°C</div>
+                <div class="sensor-value">24.5 <span>°C</span></div>
+                <div class="sensor-footer">
+                    <span class="sensor-status status-warn">⚠️ สูงกว่าเกณฑ์เล็กน้อย</span>
+                    <div class="sensor-range">ค่าที่เหมาะสม: 18 - 24 °C</div>
                 </div>
             </div>
 
             <!-- pH -->
-            <div class="sensor-card" onclick="openChart('ค่า pH ในน้ำ', [6.1, 6.2, 6.3, 6.1, 6.2])">
+            <div class="sensor-card glass-card" onclick="openChart('ค่า pH ในน้ำ', [6.1, 6.2, 6.3, 6.1, 6.2], 'pH')">
                 <div class="sensor-title">
-                    <span>ค่า pH ในน้ำ</span>
-                    <span>🧪</span>
+                    <span>ระดับความสมดุล (pH)</span>
+                    <div class="icon-wrapper ic-ph">🧪</div>
                 </div>
-                <div class="sensor-value">6.2 <span style="font-size: 1rem;">pH</span></div>
-                <div>
-                    <span class="sensor-status status-good">เหมาะสม</span>
-                    <div class="sensor-range">ช่วงเหมาะสม: 6.0-6.8 pH</div>
+                <div class="sensor-value">6.2 <span>pH</span></div>
+                <div class="sensor-footer">
+                    <span class="sensor-status status-good">✔️ อยู่ในเกณฑ์ดีมาก</span>
+                    <div class="sensor-range">ค่าที่เหมาะสม: 6.0 - 6.8 pH</div>
                 </div>
             </div>
 
             <!-- EC -->
-            <div class="sensor-card" onclick="openChart('ค่าปุ๋ย (EC)', [1.7, 1.8, 1.8, 1.9, 1.8])">
+            <div class="sensor-card glass-card" onclick="openChart('ค่าความเข้มข้นปุ๋ย (EC)', [1.7, 1.8, 1.8, 1.9, 1.8], 'mS/cm')">
                 <div class="sensor-title">
-                    <span>ค่าปุ๋ย (EC)</span>
-                    <span>⚡</span>
+                    <span>ความเข้มข้นปุ๋ย (EC)</span>
+                    <div class="icon-wrapper ic-ec">⚡</div>
                 </div>
-                <div class="sensor-value">1.8 <span style="font-size: 1rem;">mS/cm</span></div>
-                <div>
-                    <span class="sensor-status status-warn">สูงกว่าเกณฑ์</span>
-                    <div class="sensor-range">ช่วงเหมาะสม: 1.2-1.6</div>
+                <div class="sensor-value">1.8 <span>mS/cm</span></div>
+                <div class="sensor-footer">
+                    <span class="sensor-status status-warn">⚠️ ควรเติมน้ำเปล่า</span>
+                    <div class="sensor-range">ค่าที่เหมาะสม: 1.2 - 1.6 mS/cm</div>
                 </div>
             </div>
 
             <!-- Battery -->
-            <div class="sensor-card" onclick="openChart('แบตเตอรี่โซลาร์ (%)', [95, 92, 90, 89, 88])">
+            <div class="sensor-card glass-card" onclick="openChart('แบตเตอรี่โซลาร์', [95, 92, 90, 89, 88], '%')">
                 <div class="sensor-title">
-                    <span>แบตเตอรี่โซลาร์</span>
-                    <span>🔋</span>
+                    <span>พลังงานสำรอง</span>
+                    <div class="icon-wrapper ic-bat">🔋</div>
                 </div>
-                <div class="sensor-value">88 <span style="font-size: 1rem;">%</span></div>
-                <div>
-                    <span class="sensor-status status-good">กำลังชาร์จ</span>
-                    <div class="progress-bar-bg" style="height: 6px; margin: 8px 0 0 0;">
-                        <div class="progress-bar-fill" style="width: 88%;"></div>
+                <div class="sensor-value">88 <span>%</span></div>
+                <div class="sensor-footer">
+                    <span class="sensor-status status-good">⚡ กำลังชาร์จ (Solar)</span>
+                    <div class="progress-bar-bg" style="height: 4px; margin: 6px 0 0 0; background: rgba(0,0,0,0.3);">
+                        <div class="progress-bar-fill" style="width: 88%; background: #10b981; box-shadow: none;"></div>
                     </div>
                 </div>
             </div>
@@ -378,10 +561,10 @@
     <div class="modal" id="chartModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 id="modalTitle">กราฟประวัติข้อมูล</h3>
-                <button class="close-btn" onclick="closeChart()">&times;</button>
+                <h3 id="modalTitle">ประวัติข้อมูล</h3>
+                <button class="close-btn" onclick="closeChart()">✕</button>
             </div>
-            <canvas id="sensorChart"></canvas>
+            <canvas id="sensorChart" height="120"></canvas>
         </div>
     </div>
 
@@ -390,12 +573,16 @@
         let isAC = true;
         let chartInstance = null;
 
+        // เปลี่ยน Default Font ของ Chart.js ให้เป็น Prompt
+        Chart.defaults.font.family = "'Prompt', sans-serif";
+        Chart.defaults.color = '#94a3b8';
+
         function updateAge(val) {
             document.getElementById('sliderValue').innerText = val + " วัน";
             let percent = Math.round((val / currentMaxDays) * 100);
             document.getElementById('progressPercent').innerText = percent + "%";
             document.getElementById('progressBar').style.width = percent + "%";
-            document.getElementById('progressText').innerText = `ความคืบหน้า (${val} จาก ${currentMaxDays} วัน)`;
+            document.getElementById('progressText').innerText = `ระยะการเติบโต (${val} จาก ${currentMaxDays} วัน)`;
         }
 
         function updatePlantType() {
@@ -405,7 +592,7 @@
             slider.max = currentMaxDays;
             
             let maxTexts = document.querySelectorAll('.max-day-text');
-            maxTexts.forEach(el => el.innerText = `Day ${currentMaxDays}`);
+            maxTexts.forEach(el => el.innerText = `(Day ${currentMaxDays})`);
             
             if (parseInt(slider.value) > currentMaxDays) {
                 slider.value = currentMaxDays;
@@ -417,50 +604,95 @@
             let btn = document.getElementById('powerBtn');
             isAC = !isAC;
             if (isAC) {
-                btn.innerText = "⚡ AC Power (คลิกเพื่อเปลี่ยน)";
-                btn.style.borderColor = "var(--accent-yellow)";
+                btn.innerHTML = "⚡ AC Power";
+                btn.style.borderColor = "rgba(245, 158, 11, 0.3)";
                 btn.style.color = "var(--accent-yellow)";
             } else {
-                btn.innerText = "☀️ Solar Power (คลิกเพื่อเปลี่ยน)";
-                btn.style.borderColor = "var(--accent-green)";
+                btn.innerHTML = "☀️ Solar Power";
+                btn.style.borderColor = "rgba(16, 185, 129, 0.3)";
                 btn.style.color = "var(--accent-green)";
             }
         }
 
-        function openChart(title, dataPoints) {
-            document.getElementById('modalTitle').innerText = 'ประวัติข้อมูล: ' + title;
-            document.getElementById('chartModal').style.display = 'flex';
+        function openChart(title, dataPoints, unit) {
+            document.getElementById('modalTitle').innerText = 'กราฟสถิติ: ' + title;
+            const modal = document.getElementById('chartModal');
+            modal.style.display = 'flex';
+            
+            // Allow display:flex to render before triggering opacity transition
+            setTimeout(() => { modal.classList.add('show'); }, 10);
 
             let ctx = document.getElementById('sensorChart').getContext('2d');
             if (chartInstance) chartInstance.destroy();
+
+            // Create gradient for the chart
+            let gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, 'rgba(59, 130, 246, 0.5)');
+            gradient.addColorStop(1, 'rgba(59, 130, 246, 0.0)');
 
             chartInstance = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: ['08:00', '10:00', '12:00', '14:00', '16:00'],
                     datasets: [{
-                        label: title,
+                        label: `${title} (${unit})`,
                         data: dataPoints,
-                        borderColor: '#10b981',
-                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        borderColor: '#3b82f6',
+                        backgroundColor: gradient,
+                        borderWidth: 3,
+                        pointBackgroundColor: '#0f172a',
+                        pointBorderColor: '#3b82f6',
+                        pointBorderWidth: 2,
+                        pointRadius: 5,
+                        pointHoverRadius: 7,
                         fill: true,
-                        tension: 0.3
+                        tension: 0.4 /* ทำให้เส้นกราฟโค้งสมูท */
                     }]
                 },
                 options: {
                     responsive: true,
-                    scales: {
-                        y: { grid: { color: '#1f2937' }, ticks: { color: '#9ca3af' } },
-                        x: { grid: { color: '#1f2937' }, ticks: { color: '#9ca3af' } }
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
                     },
-                    plugins: { legend: { labels: { color: '#f9fafb' } } }
+                    plugins: { 
+                        legend: { 
+                            labels: { color: '#f8fafc', font: { size: 13 } } 
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                            titleFont: { family: 'Prompt', size: 14 },
+                            bodyFont: { family: 'Prompt', size: 13 },
+                            padding: 12,
+                            borderColor: 'rgba(255,255,255,0.1)',
+                            borderWidth: 1,
+                            displayColors: false
+                        }
+                    },
+                    scales: {
+                        y: { 
+                            grid: { color: 'rgba(255, 255, 255, 0.05)', drawBorder: false }, 
+                            ticks: { color: '#94a3b8' } 
+                        },
+                        x: { 
+                            grid: { display: false, drawBorder: false }, 
+                            ticks: { color: '#94a3b8' } 
+                        }
+                    }
                 }
             });
         }
 
         function closeChart() {
-            document.getElementById('chartModal').style.display = 'none';
+            const modal = document.getElementById('chartModal');
+            modal.classList.remove('show');
+            setTimeout(() => { modal.style.display = 'none'; }, 300);
         }
+        
+        // Close modal when clicking outside
+        document.getElementById('chartModal').addEventListener('click', function(e) {
+            if (e.target === this) closeChart();
+        });
     </script>
 </body>
 </html>
