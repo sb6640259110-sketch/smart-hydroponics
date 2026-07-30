@@ -312,6 +312,30 @@
             transform: scale(1.2);
         }
 
+        /* Harvest Notification Alert */
+        .harvest-alert {
+            background: linear-gradient(90deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.05));
+            border-left: 4px solid var(--accent-green);
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15);
+            animation: fadeInDown 0.4s ease;
+            transition: opacity 0.3s ease;
+        }
+
+        .harvest-alert.hidden {
+            display: none;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* Sensor Grid */
         .grid-sensors {
             display: grid;
@@ -410,6 +434,47 @@
         .sensor-range {
             font-size: 0.8rem;
             color: var(--text-sub);
+        }
+
+        /* Data Log Table */
+        .table-card {
+            padding: 24px;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        .data-table th {
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-sub);
+            font-weight: 500;
+            border-bottom: 1px solid var(--card-border);
+            white-space: nowrap;
+        }
+
+        .data-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            color: var(--text-main);
+            transition: background 0.2s;
+        }
+
+        .data-table tbody tr:hover td {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .data-table tbody tr td:first-child {
+            color: var(--accent-blue);
+            font-weight: 500;
         }
 
         /* Modal Graph */
@@ -547,6 +612,15 @@
                 <input type="range" id="ageSlider" min="1" max="45" value="18" oninput="updateAge(this.value)">
                 <span id="sliderValue" style="font-weight: 600; color: var(--accent-green); min-width: 50px;">18 วัน</span>
             </div>
+
+            <!-- Harvest Alert (ซ่อนไว้ จะแสดงเมื่อถึงกำหนด) -->
+            <div id="harvestAlert" class="harvest-alert hidden">
+                <span style="font-size: 1.5rem;">🎉</span> 
+                <div>
+                    <strong style="color: var(--accent-green);">ถึงเวลาเก็บเกี่ยวแล้ว!</strong>
+                    <div style="font-size: 0.85rem; margin-top: 2px;">ผักของคุณเติบโตเต็มที่และพร้อมสำหรับการเก็บเกี่ยวแล้ววันนี้</div>
+                </div>
+            </div>
         </div>
 
         <!-- Sensors Grid -->
@@ -559,7 +633,7 @@
                 </div>
                 <div class="sensor-value">24.5 <span>°C</span></div>
                 <div class="sensor-footer">
-                    <span class="sensor-status status-warn">⚠️ สูงกว่าเกณฑ์เล็กน้อย</span>
+                    <span class="sensor-status status-warn">⚠️ สูงกว่าเกณฑ์</span>
                     <div class="sensor-range">ค่าที่เหมาะสม: 18 - 24 °C</div>
                 </div>
             </div>
@@ -605,6 +679,29 @@
                 </div>
             </div>
         </div>
+
+        <!-- Data Log Table -->
+        <div class="table-card glass-card">
+            <div class="growth-header" style="margin-bottom: 16px;">
+                <h3><span style="font-size: 1.2rem;">📊</span> บันทึกผลประวัติรายวัน</h3>
+            </div>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>วันที่ (Day)</th>
+                            <th>อุณหภูมิน้ำ (°C)</th>
+                            <th>ระดับค่า pH</th>
+                            <th>ความเข้มข้นปุ๋ย (EC)</th>
+                            <th>พลังงานแบตเตอรี่ (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="logTableBody">
+                        <!-- จะถูกสร้างโดย JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
     <!-- Modal for Chart -->
@@ -626,33 +723,31 @@
         Chart.defaults.font.family = "'Prompt', sans-serif";
         Chart.defaults.color = '#94a3b8';
 
+        // Initialize Table Data on load
+        window.onload = () => {
+            updateTable(document.getElementById('ageSlider').value);
+        };
+
         // ฟังก์ชันเลือกผักจาก Chips
         function selectPlant(element) {
-            // ลบสถานะ active จากปุ่มทั้งหมด
             document.querySelectorAll('.plant-chip').forEach(el => el.classList.remove('active'));
-            // เพิ่มสถานะ active ให้ปุ่มที่โดนคลิก
             element.classList.add('active');
 
-            // ดึงข้อมูลจาก Data attributes
             const days = parseInt(element.getAttribute('data-days'));
             const icon = element.getAttribute('data-icon');
             const name = element.getAttribute('data-name');
             
             currentMaxDays = days;
 
-            // อัปเดตไอคอนหลักและเพิ่ม Animation เด้งดึ๋ง
             const mainIcon = document.getElementById('mainPlantIcon');
             mainIcon.innerText = icon;
             
-            // รีเซ็ต Animation เพื่อให้มันเล่นซ้ำ
             mainIcon.classList.remove('pop-anim');
-            void mainIcon.offsetWidth; // Trigger Reflow
+            void mainIcon.offsetWidth; 
             mainIcon.classList.add('pop-anim');
 
-            // อัปเดตชื่อ
             document.getElementById('currentPlantName').innerText = `สายพันธุ์ที่ปลูก: ${name} (${days} วัน)`;
 
-            // อัปเดต Slider และ Progress
             let slider = document.getElementById('ageSlider');
             slider.max = currentMaxDays;
             
@@ -665,12 +760,59 @@
             updateAge(slider.value);
         }
 
+        // อัปเดตอายุและตรวจสอบวันเก็บเกี่ยว
         function updateAge(val) {
+            val = parseInt(val);
             document.getElementById('sliderValue').innerText = val + " วัน";
+            
             let percent = Math.round((val / currentMaxDays) * 100);
             document.getElementById('progressPercent').innerText = percent + "%";
             document.getElementById('progressBar').style.width = percent + "%";
             document.getElementById('progressText').innerText = `ระยะการเติบโต (${val} จาก ${currentMaxDays} วัน)`;
+
+            // จัดการแจ้งเตือนเก็บเกี่ยว
+            const alertBox = document.getElementById('harvestAlert');
+            if (val === currentMaxDays) {
+                alertBox.classList.remove('hidden');
+            } else {
+                alertBox.classList.add('hidden');
+            }
+
+            // อัปเดตตารางข้อมูล
+            updateTable(val);
+        }
+
+        // ฟังก์ชันสร้างข้อมูลจำลองสำหรับตารางรายวัน
+        function updateTable(currentDay) {
+            currentDay = parseInt(currentDay);
+            const tbody = document.getElementById('logTableBody');
+            let rowsHtml = '';
+            
+            // สร้างข้อมูลย้อนหลัง 4 วัน (เพื่อเป็นตัวอย่าง)
+            for(let i = 0; i < 4; i++) {
+                let day = currentDay - i;
+                if (day < 1) break; // ไม่ให้วันที่ติดลบ
+                
+                // สุ่มข้อมูลเล็กน้อยให้ดูสมจริง
+                let temp = (24.0 + Math.random()).toFixed(1);
+                let ph = (6.0 + (Math.random() * 0.4)).toFixed(1);
+                let ec = (1.6 + (Math.random() * 0.3)).toFixed(1);
+                let bat = 100 - Math.floor(Math.random() * 15);
+                
+                let dayText = i === 0 ? `${day} (วันนี้)` : `${day}`;
+                
+                rowsHtml += `
+                    <tr>
+                        <td>${dayText}</td>
+                        <td>${temp}</td>
+                        <td>${ph}</td>
+                        <td>${ec}</td>
+                        <td>${bat}%</td>
+                    </tr>
+                `;
+            }
+            
+            tbody.innerHTML = rowsHtml;
         }
 
         function togglePower() {
