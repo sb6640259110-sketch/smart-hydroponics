@@ -19,14 +19,13 @@
             --text-main: #f8fafc;
             --text-sub: #94a3b8;
             --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
-            --shadow-glow: 0 0 15px rgba(16, 185, 129, 0.3);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Prompt', sans-serif; /* ใช้ฟอนต์ Prompt */
+            font-family: 'Prompt', sans-serif;
         }
 
         body {
@@ -144,10 +143,10 @@
         .growth-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             margin-bottom: 24px;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 20px;
         }
 
         .growth-header h3 {
@@ -155,25 +154,70 @@
             margin-bottom: 6px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            font-size: 1.3rem;
         }
 
-        .plant-select {
-            background-color: #0f172a;
-            color: var(--text-main);
+        /* Plant Selector Chips */
+        .plant-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            max-width: 600px;
+        }
+
+        .plant-chip {
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 10px 16px;
-            border-radius: 12px;
-            outline: none;
-            font-size: 0.95rem;
+            padding: 8px 16px;
+            border-radius: 20px;
             cursor: pointer;
-            transition: border-color 0.3s;
-        }
-        
-        .plant-select:hover {
-            border-color: var(--accent-blue);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: var(--text-sub);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            user-select: none;
         }
 
+        .plant-chip:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--accent-blue);
+            color: var(--text-main);
+            transform: translateY(-2px);
+        }
+
+        .plant-chip.active {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: var(--accent-blue);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+            font-weight: 500;
+        }
+
+        .chip-icon {
+            font-size: 1.1rem;
+            transition: transform 0.3s;
+        }
+
+        .plant-chip.active .chip-icon {
+            transform: scale(1.2);
+        }
+
+        /* Animation for Main Icon */
+        .pop-anim {
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-block;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.5) rotate(-15deg); opacity: 0; }
+            50% { transform: scale(1.2) rotate(10deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        /* Progress Bar */
         .progress-container {
             margin-bottom: 24px;
             background: rgba(0,0,0,0.15);
@@ -294,7 +338,6 @@
             transition: background 0.3s;
         }
 
-        /* Colored top borders based on sensor type */
         .sensor-card:nth-child(1)::before { background: linear-gradient(90deg, #f87171, #fb923c); }
         .sensor-card:nth-child(2)::before { background: linear-gradient(90deg, #c084fc, #818cf8); }
         .sensor-card:nth-child(3)::before { background: linear-gradient(90deg, #fbbf24, #f59e0b); }
@@ -412,10 +455,6 @@
             padding-bottom: 15px;
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
-        
-        .modal-header h3 {
-            font-weight: 500;
-        }
 
         .close-btn {
             background: rgba(255,255,255,0.05);
@@ -463,16 +502,27 @@
         <div class="growth-card glass-card">
             <div class="growth-header">
                 <div>
-                    <h3>🌱 ติดตามการเติบโต</h3>
-                    <p style="font-size: 0.9rem; color: var(--text-sub);">ติดตามและคาดการณ์รอบการเก็บเกี่ยว</p>
+                    <h3><span id="mainPlantIcon" class="pop-anim">🥬</span> ติดตามการเติบโต</h3>
+                    <p id="currentPlantName" style="font-size: 0.9rem; color: var(--accent-blue); margin-top: 4px;">สายพันธุ์ที่ปลูก: บัตเตอร์เฮด (45 วัน)</p>
                 </div>
-                <div style="display: flex; flex-direction: column; gap: 6px;">
-                    <label style="font-size: 0.85rem; color: var(--text-sub);">สายพันธุ์ผักที่ปลูก</label>
-                    <select class="plant-select" id="plantType" onchange="updatePlantType()">
-                        <option value="45">บัตเตอร์เฮด (Butterhead) - 45 วัน</option>
-                        <option value="40">กรีนโอ๊ค (Green Oak) - 40 วัน</option>
-                        <option value="50">เรดโอ๊ค (Red Oak) - 50 วัน</option>
-                    </select>
+                
+                <!-- เลือกผักแบบ Chips -->
+                <div class="plant-selector">
+                    <div class="plant-chip active" data-days="45" data-icon="🥬" data-name="บัตเตอร์เฮด" onclick="selectPlant(this)">
+                        <span class="chip-icon">🥬</span> บัตเตอร์เฮด
+                    </div>
+                    <div class="plant-chip" data-days="40" data-icon="🥦" data-name="กรีนโอ๊ค" onclick="selectPlant(this)">
+                        <span class="chip-icon">🥦</span> กรีนโอ๊ค
+                    </div>
+                    <div class="plant-chip" data-days="50" data-icon="🍁" data-name="เรดโอ๊ค" onclick="selectPlant(this)">
+                        <span class="chip-icon">🍁</span> เรดโอ๊ค
+                    </div>
+                    <div class="plant-chip" data-days="45" data-icon="🌿" data-name="คอส" onclick="selectPlant(this)">
+                        <span class="chip-icon">🌿</span> คอส
+                    </div>
+                    <div class="plant-chip" data-days="45" data-icon="🥗" data-name="ฟิลเลย์" onclick="selectPlant(this)">
+                        <span class="chip-icon">🥗</span> ฟิลเลย์
+                    </div>
                 </div>
             </div>
 
@@ -573,21 +623,36 @@
         let isAC = true;
         let chartInstance = null;
 
-        // เปลี่ยน Default Font ของ Chart.js ให้เป็น Prompt
         Chart.defaults.font.family = "'Prompt', sans-serif";
         Chart.defaults.color = '#94a3b8';
 
-        function updateAge(val) {
-            document.getElementById('sliderValue').innerText = val + " วัน";
-            let percent = Math.round((val / currentMaxDays) * 100);
-            document.getElementById('progressPercent').innerText = percent + "%";
-            document.getElementById('progressBar').style.width = percent + "%";
-            document.getElementById('progressText').innerText = `ระยะการเติบโต (${val} จาก ${currentMaxDays} วัน)`;
-        }
+        // ฟังก์ชันเลือกผักจาก Chips
+        function selectPlant(element) {
+            // ลบสถานะ active จากปุ่มทั้งหมด
+            document.querySelectorAll('.plant-chip').forEach(el => el.classList.remove('active'));
+            // เพิ่มสถานะ active ให้ปุ่มที่โดนคลิก
+            element.classList.add('active');
 
-        function updatePlantType() {
-            let select = document.getElementById('plantType');
-            currentMaxDays = parseInt(select.value);
+            // ดึงข้อมูลจาก Data attributes
+            const days = parseInt(element.getAttribute('data-days'));
+            const icon = element.getAttribute('data-icon');
+            const name = element.getAttribute('data-name');
+            
+            currentMaxDays = days;
+
+            // อัปเดตไอคอนหลักและเพิ่ม Animation เด้งดึ๋ง
+            const mainIcon = document.getElementById('mainPlantIcon');
+            mainIcon.innerText = icon;
+            
+            // รีเซ็ต Animation เพื่อให้มันเล่นซ้ำ
+            mainIcon.classList.remove('pop-anim');
+            void mainIcon.offsetWidth; // Trigger Reflow
+            mainIcon.classList.add('pop-anim');
+
+            // อัปเดตชื่อ
+            document.getElementById('currentPlantName').innerText = `สายพันธุ์ที่ปลูก: ${name} (${days} วัน)`;
+
+            // อัปเดต Slider และ Progress
             let slider = document.getElementById('ageSlider');
             slider.max = currentMaxDays;
             
@@ -598,6 +663,14 @@
                 slider.value = currentMaxDays;
             }
             updateAge(slider.value);
+        }
+
+        function updateAge(val) {
+            document.getElementById('sliderValue').innerText = val + " วัน";
+            let percent = Math.round((val / currentMaxDays) * 100);
+            document.getElementById('progressPercent').innerText = percent + "%";
+            document.getElementById('progressBar').style.width = percent + "%";
+            document.getElementById('progressText').innerText = `ระยะการเติบโต (${val} จาก ${currentMaxDays} วัน)`;
         }
 
         function togglePower() {
@@ -619,13 +692,11 @@
             const modal = document.getElementById('chartModal');
             modal.style.display = 'flex';
             
-            // Allow display:flex to render before triggering opacity transition
             setTimeout(() => { modal.classList.add('show'); }, 10);
 
             let ctx = document.getElementById('sensorChart').getContext('2d');
             if (chartInstance) chartInstance.destroy();
 
-            // Create gradient for the chart
             let gradient = ctx.createLinearGradient(0, 0, 0, 400);
             gradient.addColorStop(0, 'rgba(59, 130, 246, 0.5)');
             gradient.addColorStop(1, 'rgba(59, 130, 246, 0.0)');
@@ -646,19 +717,14 @@
                         pointRadius: 5,
                         pointHoverRadius: 7,
                         fill: true,
-                        tension: 0.4 /* ทำให้เส้นกราฟโค้งสมูท */
+                        tension: 0.4
                     }]
                 },
                 options: {
                     responsive: true,
-                    interaction: {
-                        mode: 'index',
-                        intersect: false,
-                    },
+                    interaction: { mode: 'index', intersect: false },
                     plugins: { 
-                        legend: { 
-                            labels: { color: '#f8fafc', font: { size: 13 } } 
-                        },
+                        legend: { labels: { color: '#f8fafc', font: { size: 13 } } },
                         tooltip: {
                             backgroundColor: 'rgba(15, 23, 42, 0.9)',
                             titleFont: { family: 'Prompt', size: 14 },
@@ -670,14 +736,8 @@
                         }
                     },
                     scales: {
-                        y: { 
-                            grid: { color: 'rgba(255, 255, 255, 0.05)', drawBorder: false }, 
-                            ticks: { color: '#94a3b8' } 
-                        },
-                        x: { 
-                            grid: { display: false, drawBorder: false }, 
-                            ticks: { color: '#94a3b8' } 
-                        }
+                        y: { grid: { color: 'rgba(255, 255, 255, 0.05)', drawBorder: false }, ticks: { color: '#94a3b8' } },
+                        x: { grid: { display: false, drawBorder: false }, ticks: { color: '#94a3b8' } }
                     }
                 }
             });
@@ -689,7 +749,6 @@
             setTimeout(() => { modal.style.display = 'none'; }, 300);
         }
         
-        // Close modal when clicking outside
         document.getElementById('chartModal').addEventListener('click', function(e) {
             if (e.target === this) closeChart();
         });
