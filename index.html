@@ -205,6 +205,11 @@
             transform: scale(1.2);
         }
 
+        .plant-chip.disabled {
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
         /* Animation for Main Icon */
         .pop-anim {
             animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -244,6 +249,11 @@
             transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
             position: relative;
+        }
+
+        .progress-bar-fill.complete {
+            background: linear-gradient(90deg, #f59e0b, #10b981);
+            box-shadow: 0 0 14px rgba(16, 185, 129, 0.8);
         }
         
         .progress-bar-fill::after {
@@ -297,6 +307,11 @@
             outline: none;
         }
 
+        input[type="range"]:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             width: 20px;
@@ -321,7 +336,9 @@
             margin-top: 20px;
             display: flex;
             align-items: center;
+            justify-content: space-between;
             gap: 12px;
+            flex-wrap: wrap;
             box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15);
             animation: fadeInDown 0.4s ease;
             transition: opacity 0.3s ease;
@@ -331,9 +348,56 @@
             display: none;
         }
 
+        .harvest-alert-text {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+        }
+
         @keyframes fadeInDown {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn-harvest {
+            background: linear-gradient(90deg, #10b981, #34d399);
+            color: #052e21;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            font-family: 'Prompt', sans-serif;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+            white-space: nowrap;
+        }
+
+        .btn-harvest:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(16, 185, 129, 0.5);
+        }
+
+        .btn-reset {
+            background: transparent;
+            color: var(--accent-yellow);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            padding: 10px 22px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            font-family: 'Prompt', sans-serif;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .btn-reset:hover {
+            background: var(--accent-yellow);
+            color: #1c1302;
+            box-shadow: 0 4px 14px rgba(245, 158, 11, 0.4);
         }
 
         /* Sensor Grid */
@@ -436,6 +500,104 @@
             color: var(--text-sub);
         }
 
+        /* Harvest Log */
+        .log-card {
+            padding: 28px;
+        }
+
+        .log-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .log-header h3 {
+            font-weight: 500;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .log-count {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            background: rgba(255,255,255,0.05);
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .log-empty {
+            color: var(--text-sub);
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 30px 10px;
+            border: 1px dashed rgba(255,255,255,0.1);
+            border-radius: 14px;
+        }
+
+        .log-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 16px;
+        }
+
+        .log-item {
+            background: rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 14px;
+            padding: 16px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            animation: fadeInDown 0.4s ease;
+            position: relative;
+        }
+
+        .log-item-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .log-item-plant {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .log-item-remove {
+            background: transparent;
+            border: none;
+            color: var(--text-sub);
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 2px 6px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .log-item-remove:hover {
+            color: var(--accent-red);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .log-item-meta {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+        }
+
+        .log-item-days {
+            font-size: 0.8rem;
+            color: var(--accent-green);
+            font-weight: 500;
+        }
+
         /* Data Log Table */
         .table-card {
             padding: 24px;
@@ -525,89 +687,4 @@
             background: rgba(255,255,255,0.05);
             border: none;
             color: var(--text-sub);
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-        }
-        
-        .close-btn:hover {
-            background: rgba(239, 68, 68, 0.2);
-            color: var(--accent-red);
-        }
-    </style>
-</head>
-<body>
-
-    <div class="container">
-        <!-- Header -->
-        <div class="header glass-card">
-            <div class="header-title">
-                <div class="header-icon">🌱</div>
-                <div>
-                    <h1>Smart Hydroponics</h1>
-                    <p>ระบบควบคุมและติดตามการเจริญเติบโตอัจฉริยะ</p>
-                </div>
-            </div>
-            <div class="status-badge">
-                <button class="btn-power" id="powerBtn" onclick="togglePower()">⚡ AC Power</button>
-                <div style="display: flex; align-items: center; gap: 8px;">
-                    <div class="online-dot"></div>
-                    <span style="font-size: 0.9rem; font-weight: 500; color: var(--accent-green);">Online</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Growth Tracker -->
-        <div class="growth-card glass-card">
-            <div class="growth-header">
-                <div>
-                    <h3><span id="mainPlantIcon" class="pop-anim">🥬</span> ติดตามการเติบโต</h3>
-                    <p id="currentPlantName" style="font-size: 0.9rem; color: var(--accent-blue); margin-top: 4px;">สายพันธุ์ที่ปลูก: บัตเตอร์เฮด (45 วัน)</p>
-                </div>
-                
-                <!-- เลือกผักแบบ Chips -->
-                <div class="plant-selector">
-                    <div class="plant-chip active" data-days="45" data-icon="🥬" data-name="บัตเตอร์เฮด" onclick="selectPlant(this)">
-                        <span class="chip-icon">🥬</span> บัตเตอร์เฮด
-                    </div>
-                    <div class="plant-chip" data-days="40" data-icon="🥦" data-name="กรีนโอ๊ค" onclick="selectPlant(this)">
-                        <span class="chip-icon">🥦</span> กรีนโอ๊ค
-                    </div>
-                    <div class="plant-chip" data-days="50" data-icon="🍁" data-name="เรดโอ๊ค" onclick="selectPlant(this)">
-                        <span class="chip-icon">🍁</span> เรดโอ๊ค
-                    </div>
-                    <div class="plant-chip" data-days="45" data-icon="🌿" data-name="คอส" onclick="selectPlant(this)">
-                        <span class="chip-icon">🌿</span> คอส
-                    </div>
-                    <div class="plant-chip" data-days="45" data-icon="🥗" data-name="ฟิลเลย์" onclick="selectPlant(this)">
-                        <span class="chip-icon">🥗</span> ฟิลเลย์
-                    </div>
-                </div>
-            </div>
-
-            <div class="progress-container">
-                <div style="display: flex; justify-content: space-between; font-weight: 500; font-size: 0.95rem; margin-bottom: 5px;">
-                    <span id="progressText">ระยะการเติบโต (18 จาก 45 วัน)</span>
-                    <span id="progressPercent" style="color: var(--accent-green); font-weight: 600;">40%</span>
-                </div>
-                <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" id="progressBar"></div>
-                </div>
-                <div class="timeline-labels">
-                    <span><small>🟢</small>เพาะเมล็ด<br><small style="color: #64748b;">(Day 1)</small></span>
-                    <span><small>🌿</small>ย้ายลงแปลง<br><small style="color: #64748b;">(Day 16)</small></span>
-                    <span><small>🥬</small>เติบโตเต็มที่<br><small style="color: #64748b;">(Day 31)</small></span>
-                    <span><small>🧺</small>เก็บเกี่ยว<br><small style="color: #64748b;" class="max-day-text">(Day 45)</small></span>
-                </div>
-            </div>
-
-            <div class="slider-control">
-                <span style="color: var(--text-sub); white-space: nowrap;">จำลองอายุ:</span>
-                <input type="range" id="ageSlider" min="1" max="45" value="18" oninput="updateAge(this.value)">
-                <span id="sliderValue" style="font-weight:
+         
