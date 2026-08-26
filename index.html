@@ -205,11 +205,6 @@
             transform: scale(1.2);
         }
 
-        .plant-chip.disabled {
-            opacity: 0.4;
-            pointer-events: none;
-        }
-
         /* Animation for Main Icon */
         .pop-anim {
             animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -249,11 +244,6 @@
             transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
             position: relative;
-        }
-
-        .progress-bar-fill.complete {
-            background: linear-gradient(90deg, #f59e0b, #10b981);
-            box-shadow: 0 0 14px rgba(16, 185, 129, 0.8);
         }
         
         .progress-bar-fill::after {
@@ -307,11 +297,6 @@
             outline: none;
         }
 
-        input[type="range"]:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             width: 20px;
@@ -336,9 +321,7 @@
             margin-top: 20px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
             gap: 12px;
-            flex-wrap: wrap;
             box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15);
             animation: fadeInDown 0.4s ease;
             transition: opacity 0.3s ease;
@@ -348,56 +331,9 @@
             display: none;
         }
 
-        .harvest-alert-text {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 0.95rem;
-        }
-
         @keyframes fadeInDown {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-
-        .btn-harvest {
-            background: linear-gradient(90deg, #10b981, #34d399);
-            color: #052e21;
-            border: none;
-            padding: 10px 22px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.9rem;
-            font-family: 'Prompt', sans-serif;
-            transition: all 0.25s ease;
-            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
-            white-space: nowrap;
-        }
-
-        .btn-harvest:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 18px rgba(16, 185, 129, 0.5);
-        }
-
-        .btn-reset {
-            background: transparent;
-            color: var(--accent-yellow);
-            border: 1px solid rgba(245, 158, 11, 0.4);
-            padding: 10px 22px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.9rem;
-            font-family: 'Prompt', sans-serif;
-            transition: all 0.25s ease;
-            white-space: nowrap;
-        }
-
-        .btn-reset:hover {
-            background: var(--accent-yellow);
-            color: #1c1302;
-            box-shadow: 0 4px 14px rgba(245, 158, 11, 0.4);
         }
 
         /* Sensor Grid */
@@ -500,104 +436,6 @@
             color: var(--text-sub);
         }
 
-        /* Harvest Log */
-        .log-card {
-            padding: 28px;
-        }
-
-        .log-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .log-header h3 {
-            font-weight: 500;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .log-count {
-            font-size: 0.85rem;
-            color: var(--text-sub);
-            background: rgba(255,255,255,0.05);
-            padding: 4px 12px;
-            border-radius: 20px;
-        }
-
-        .log-empty {
-            color: var(--text-sub);
-            font-size: 0.9rem;
-            text-align: center;
-            padding: 30px 10px;
-            border: 1px dashed rgba(255,255,255,0.1);
-            border-radius: 14px;
-        }
-
-        .log-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 16px;
-        }
-
-        .log-item {
-            background: rgba(0,0,0,0.2);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 14px;
-            padding: 16px 18px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            animation: fadeInDown 0.4s ease;
-            position: relative;
-        }
-
-        .log-item-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .log-item-plant {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 500;
-            font-size: 1rem;
-        }
-
-        .log-item-remove {
-            background: transparent;
-            border: none;
-            color: var(--text-sub);
-            cursor: pointer;
-            font-size: 0.9rem;
-            padding: 2px 6px;
-            border-radius: 6px;
-            transition: all 0.2s;
-        }
-
-        .log-item-remove:hover {
-            color: var(--accent-red);
-            background: rgba(239, 68, 68, 0.1);
-        }
-
-        .log-item-meta {
-            font-size: 0.8rem;
-            color: var(--text-sub);
-        }
-
-        .log-item-days {
-            font-size: 0.8rem;
-            color: var(--accent-green);
-            font-weight: 500;
-        }
-
         /* Data Log Table */
         .table-card {
             padding: 24px;
@@ -687,4 +525,728 @@
             background: rgba(255,255,255,0.05);
             border: none;
             color: var(--text-sub);
-         
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        
+        .close-btn:hover {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--accent-red);
+        }
+
+        /* Harvest Actions */
+        .btn-harvest-confirm {
+            background: linear-gradient(90deg, #10b981, #34d399);
+            color: #052e1f;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-top: 12px;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            transition: transform 0.2s;
+            font-family: 'Prompt', sans-serif;
+        }
+
+        .btn-harvest-confirm:hover { transform: translateY(-2px); }
+
+        .btn-reset-cycle {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-sub);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Prompt', sans-serif;
+        }
+
+        .btn-reset-cycle:hover { border-color: var(--accent-red); color: var(--accent-red); }
+
+        .form-field { margin-bottom: 16px; }
+
+        .form-field label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            margin-bottom: 6px;
+        }
+
+        .form-field input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 10px 14px;
+            color: var(--text-main);
+            font-size: 1rem;
+            font-family: 'Prompt', sans-serif;
+        }
+
+        .form-field input:focus { outline: none; border-color: var(--accent-green); }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #1e293b;
+            border: 1px solid var(--accent-green);
+            color: var(--text-main);
+            padding: 14px 24px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            z-index: 2000;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .summary-item {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            padding: 16px;
+        }
+
+        .summary-item .s-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .summary-item .s-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            padding: 3px 0;
+        }
+
+        .summary-item .s-row b { color: var(--text-main); font-weight: 500; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header glass-card">
+            <div class="header-title">
+                <div class="header-icon">🌱</div>
+                <div>
+                    <h1>Smart Hydroponics</h1>
+                    <p>ระบบควบคุมและติดตามการเจริญเติบโตอัจฉริยะ</p>
+                </div>
+            </div>
+            <div class="status-badge">
+                <button class="btn-power" id="powerBtn" onclick="togglePower()">⚡ AC Power</button>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <div class="online-dot"></di>
+                    <span style="font-size: 0.9rem; font-weight: 500; color: var(--accent-green);">Online</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Growth Tracker -->
+        <div class="growth-card glass-card">
+            <div class="growth-header">
+                <div>
+                    <h3><span id="mainPlantIcon" class="pop-anim">🥬</span> ติดตามการเติบโต</h3>
+                    <p id="currentPlantName" style="font-size: 0.9rem; color: var(--accent-blue); margin-top: 4px;">สายพันธุ์ที่ปลูก: บัตเตอร์เฮด (45 วัน)</p>
+                </div>
+                
+                <!-- เลือกผักแบบ Chips -->
+                <div class="plant-selector">
+                    <div class="plant-chip active" data-days="45" data-icon="🥬" data-name="บัตเตอร์เฮด" onclick="selectPlant(this)">
+                        <span class="chip-icon">🥬</span> บัตเตอร์เฮด
+                    </div>
+                    <div class="plant-chip" data-days="40" data-icon="🥦" data-name="กรีนโอ๊ค" onclick="selectPlant(this)">
+                        <span class="chip-icon">🥦</span> กรีนโอ๊ค
+                    </div>
+                    <div class="plant-chip" data-days="50" data-icon="🍁" data-name="เรดโอ๊ค" onclick="selectPlant(this)">
+                        <span class="chip-icon">🍁</span> เรดโอ๊ค
+                    </div>
+                    <div class="plant-chip" data-days="45" data-icon="🌿" data-name="คอส" onclick="selectPlant(this)">
+                        <span class="chip-icon">🌿</span> คอส
+                    </div>
+                    <div class="plant-chip" data-days="45" data-icon="🥗" data-name="ฟิลเลย์" onclick="selectPlant(this)">
+                        <span class="chip-icon">🥗</span> ฟิลเลย์
+                    </div>
+                </div>
+            </div>
+
+            <div class="progress-container">
+                <div style="display: flex; justify-content: space-between; font-weight: 500; font-size: 0.95rem; margin-bottom: 5px;">
+                    <span id="progressText">ระยะการเติบโต (18 จาก 45 วัน)</span>
+                    <span id="progressPercent" style="color: var(--accent-green); font-weight: 600;">40%</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progressBar"></div>
+                </div>
+                <div class="timeline-labels">
+                    <span><small>🟢</small>เพาะเมล็ด<br><small style="color: #64748b;">(Day 1)</small></span>
+                    <span><small>🌿</small>ย้ายลงแปลง<br><small style="color: #64748b;">(Day 16)</small></span>
+                    <span><small>🥬</small>เติบโตเต็มที่<br><small style="color: #64748b;">(Day 31)</small></span>
+                    <span><small>🧺</small>เก็บเกี่ยว<br><small style="color: #64748b;" class="max-day-text">(Day 45)</small></span>
+                </div>
+            </div>
+
+            <div class="slider-control">
+                <span style="color: var(--text-sub); white-space: nowrap;">จำลองอายุ:</span>
+                <input type="range" id="ageSlider" min="1" max="45" value="18" oninput="updateAge(this.value)">
+                <span id="sliderValue" style="font-weight: 600; color: var(--accent-green); min-width: 50px;">18 วัน</span>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; margin-top: 12px;">
+                <button class="btn-reset-cycle" onclick="manualResetCycle()">🔄 เริ่มรอบปลูกใหม่ (ไม่บันทึกผล)</button>
+            </div>
+
+            <!-- Harvest Alert (ซ่อนไว้ จะแสดงเมื่อถึงกำหนด) -->
+            <div id="harvestAlert" class="harvest-alert hidden">
+                <span style="font-size: 1.5rem;">🎉</span> 
+                <div style="flex: 1;">
+                    <strong style="color: var(--accent-green);">ถึงเวลาเก็บเกี่ยวแล้ว!</strong>
+                    <div style="font-size: 0.85rem; margin-top: 2px;">ผักของคุณเติบโตเต็มที่และพร้อมสำหรับการเก็บเกี่ยวแล้ววันนี้</div>
+                    <button class="btn-harvest-confirm" onclick="openHarvestModal()">✅ ยืนยันการเก็บเกี่ยว</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sensors Grid -->
+        <div class="grid-sensors">
+            <!-- Temp -->
+            <div class="sensor-card glass-card" onclick="openChart('อุณหภูมิน้ำ', [24.1, 24.3, 24.5, 24.2, 24.5], '°C')">
+                <div class="sensor-title">
+                    <span>อุณหภูมิน้ำ</span>
+                    <div class="icon-wrapper ic-temp">🌡️</div>
+                </div>
+                <div class="sensor-value">24.5 <span>°C</span></div>
+                <div class="sensor-footer">
+                    <span class="sensor-status status-warn">⚠️ สูงกว่าเกณฑ์</span>
+                    <div class="sensor-range">ค่าที่เหมาะสม: 18 - 24 °C</div>
+                </div>
+            </div>
+
+            <!-- pH -->
+            <div class="sensor-card glass-card" onclick="openChart('ค่า pH ในน้ำ', [6.1, 6.2, 6.3, 6.1, 6.2], 'pH')">
+                <div class="sensor-title">
+                    <span>ระดับความสมดุล (pH)</span>
+                    <div class="icon-wrapper ic-ph">🧪</div>
+                </div>
+                <div class="sensor-value">6.2 <span>pH</span></div>
+                <div class="sensor-footer">
+                    <span class="sensor-status status-good">✔️ อยู่ในเกณฑ์ดีมาก</span>
+                    <div class="sensor-range">ค่าที่เหมาะสม: 6.0 - 6.8 pH</div>
+                </div>
+            </div>
+
+            <!-- EC -->
+            <div class="sensor-card glass-card" onclick="openChart('ค่าความเข้มข้นปุ๋ย (EC)', [1.7, 1.8, 1.8, 1.9, 1.8], 'mS/cm')">
+                <div class="sensor-title">
+                    <span>ความเข้มข้นปุ๋ย (EC)</span>
+                    <div class="icon-wrapper ic-ec">⚡</div>
+                </div>
+                <div class="sensor-value">1.8 <span>mS/cm</span></div>
+                <div class="sensor-footer">
+                    <span class="sensor-status status-warn">⚠️ ควรเติมน้ำเปล่า</span>
+                    <div class="sensor-range">ค่าที่เหมาะสม: 1.2 - 1.6 mS/cm</div>
+                </div>
+            </div>
+
+            <!-- Battery -->
+            <div class="sensor-card glass-card" onclick="openChart('แบตเตอรี่โซลาร์', [95, 92, 90, 89, 88], '%')">
+                <div class="sensor-title">
+                    <span>พลังงานสำรอง</span>
+                    <div class="icon-wrapper ic-bat">🔋</div>
+                </div>
+                <div class="sensor-value" id="batteryValue">88 <span>%</span></div>
+                <div class="sensor-footer">
+                    <span class="sensor-status status-good" id="batteryStatus">⚡ กำลังชาร์จ (Solar)</span>
+                    <div class="progress-bar-bg" style="height: 4px; margin: 6px 0 0 0; background: rgba(0,0,0,0.3);">
+                        <div class="progress-bar-fill" id="batteryBarFill" style="width: 88%; background: #10b981; box-shadow: none;"></div>
+                    </div>
+                    <div class="sensor-range">ค่าที่เหมาะสม: มากกว่า 20 %</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Log Table -->
+        <div class="table-card glass-card">
+            <div class="growth-header" style="margin-bottom: 16px;">
+                <h3><span style="font-size: 1.2rem;">📊</span> บันทึกผลประวัติรายวัน</h3>
+            </div>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>วันที่ (Day)</th>
+                            <th>อุณหภูมิน้ำ (°C)</th>
+                            <th>ระดับค่า pH</th>
+                            <th>ความเข้มข้นปุ๋ย (EC)</th>
+                            <th>พลังงานแบตเตอรี่ (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="logTableBody">
+                        <!-- จะถูกสร้างโดย JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Harvest Summary per Plant Type -->
+        <div class="table-card glass-card">
+            <div class="growth-header" style="margin-bottom: 16px;">
+                <h3><span style="font-size: 1.2rem;">🧺</span> สรุปผลผลิตแต่ละชนิดพืช</h3>
+            </div>
+            <div id="harvestSummaryGrid" class="summary-grid">
+                <p style="color: var(--text-sub); font-size: 0.9rem;">ยังไม่มีข้อมูลการเก็บเกี่ยว</p>
+            </div>
+        </div>
+
+        <!-- Harvest History Log -->
+        <div class="table-card glass-card">
+            <div class="growth-header" style="margin-bottom: 16px;">
+                <h3><span style="font-size: 1.2rem;">📋</span> บันทึกประวัติการเก็บเกี่ยว</h3>
+            </div>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>รอบที่</th>
+                            <th>ชนิดผัก</th>
+                            <th>อายุที่เก็บเกี่ยว (วัน)</th>
+                            <th>น้ำหนัก (กก.)</th>
+                            <th>จำนวน (ต้น)</th>
+                            <th>วันที่เก็บเกี่ยว</th>
+                        </tr>
+                    </thead>
+                    <tbody id="harvestLogBody">
+                        <tr><td colspan="6" style="text-align: center; color: var(--text-sub);">ยังไม่มีการเก็บเกี่ยว</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Chart -->
+    <div class="modal" id="chartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">ประวัติข้อมูล</h3>
+                <button class="close-btn" onclick="closeChart()">✕</button>
+            </div>
+            <canvas id="sensorChart" height="120"></canvas>
+        </div>
+    </div>
+
+    <!-- Modal for Harvest Confirmation -->
+    <div class="modal" id="harvestModal">
+        <div class="modal-content" style="max-width: 420px;">
+            <div class="modal-header">
+                <h3>🧺 บันทึกผลการเก็บเกี่ยว</h3>
+                <button class="close-btn" onclick="closeHarvestModal()">✕</button>
+            </div>
+            <p id="harvestModalPlantInfo" style="color: var(--text-sub); font-size: 0.9rem; margin-bottom: 20px;"></p>
+            <div class="form-field">
+                <label>น้ำหนักที่เก็บเกี่ยวได้ (กก.)</label>
+                <input type="number" id="harvestWeight" step="0.1" min="0" placeholder="เช่น 2.5">
+            </div>
+            <div class="form-field">
+                <label>จำนวนต้น</label>
+                <input type="number" id="harvestQty" step="1" min="0" placeholder="เช่น 12">
+            </div>
+            <button class="btn-harvest-confirm" style="width: 100%;" onclick="confirmHarvest()">✅ ยืนยันและเริ่มรอบใหม่</button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span>✅</span>
+        <span id="toastMessage">บันทึกเรียบร้อย</span>
+    </div>
+
+    <script>
+        let currentMaxDays = 45;
+        let isAC = true;
+        let chartInstance = null;
+
+        // ===== Harvest Tracking State =====
+        let currentPlantIcon = '🥬';
+        let currentPlantNameVal = 'บัตเตอร์เฮด';
+        let harvestLog = [];       // ประวัติการเก็บเกี่ยวทั้งหมด (เก็บไว้ในหน่วยความจำระหว่างเปิดหน้านี้)
+        let harvestCycleCount = 0; // นับรอบการปลูก
+
+        // ตั้งค่า URL ของ Raspberry Pi server หากต้องการส่งข้อมูลไปเก็บถาวร (ดูไฟล์ raspberry_pi_server.py)
+        // เช่น 'http://raspberrypi.local:5000' — ถ้าปล่อยว่างไว้ ระบบจะบันทึกในหน่วยความจำของหน้านี้เท่านั้น
+        const API_BASE_URL = '';
+
+        Chart.defaults.font.family = "'Prompt', sans-serif";
+        Chart.defaults.color = '#94a3b8';
+
+        // Initialize Table Data on load
+        window.onload = () => {
+            updateTable(document.getElementById('ageSlider').value);
+            updateBatteryStatus(88);
+        };
+
+        // ฟังก์ชันเลือกผักจาก Chips
+        function selectPlant(element) {
+            document.querySelectorAll('.plant-chip').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+
+            const days = parseInt(element.getAttribute('data-days'));
+            const icon = element.getAttribute('data-icon');
+            const name = element.getAttribute('data-name');
+            
+            currentMaxDays = days;
+            currentPlantIcon = icon;
+            currentPlantNameVal = name;
+
+            const mainIcon = document.getElementById('mainPlantIcon');
+            mainIcon.innerText = icon;
+            
+            mainIcon.classList.remove('pop-anim');
+            void mainIcon.offsetWidth; 
+            mainIcon.classList.add('pop-anim');
+
+            document.getElementById('currentPlantName').innerText = `สายพันธุ์ที่ปลูก: ${name} (${days} วัน)`;
+
+            let slider = document.getElementById('ageSlider');
+            slider.max = currentMaxDays;
+            
+            let maxTexts = document.querySelectorAll('.max-day-text');
+            maxTexts.forEach(el => el.innerText = `(Day ${currentMaxDays})`);
+            
+            if (parseInt(slider.value) > currentMaxDays) {
+                slider.value = currentMaxDays;
+            }
+            updateAge(slider.value);
+        }
+
+        // อัปเดตอายุและตรวจสอบวันเก็บเกี่ยว
+        function updateAge(val) {
+            val = parseInt(val);
+            document.getElementById('sliderValue').innerText = val + " วัน";
+            
+            let percent = Math.round((val / currentMaxDays) * 100);
+            document.getElementById('progressPercent').innerText = percent + "%";
+            document.getElementById('progressBar').style.width = percent + "%";
+            document.getElementById('progressText').innerText = `ระยะการเติบโต (${val} จาก ${currentMaxDays} วัน)`;
+
+            // จัดการแจ้งเตือนเก็บเกี่ยว
+            const alertBox = document.getElementById('harvestAlert');
+            if (val === currentMaxDays) {
+                alertBox.classList.remove('hidden');
+            } else {
+                alertBox.classList.add('hidden');
+            }
+
+            // อัปเดตตารางข้อมูล
+            updateTable(val);
+        }
+
+        // ===== Harvest Functions =====
+
+        // เปิด modal กรอกผลการเก็บเกี่ยว
+        function openHarvestModal() {
+            document.getElementById('harvestModalPlantInfo').innerText =
+                `${currentPlantIcon} ${currentPlantNameVal} — อายุ ${currentMaxDays} วัน`;
+            document.getElementById('harvestWeight').value = '';
+            document.getElementById('harvestQty').value = '';
+            const modal = document.getElementById('harvestModal');
+            modal.style.display = 'flex';
+            setTimeout(() => { modal.classList.add('show'); }, 10);
+        }
+
+        function closeHarvestModal() {
+            const modal = document.getElementById('harvestModal');
+            modal.classList.remove('show');
+            setTimeout(() => { modal.style.display = 'none'; }, 300);
+        }
+
+        // ยืนยันการเก็บเกี่ยว: บันทึกผล + รีเซ็ตรอบปลูกใหม่
+        function confirmHarvest() {
+            const weight = parseFloat(document.getElementById('harvestWeight').value) || 0;
+            const qty = parseInt(document.getElementById('harvestQty').value) || 0;
+
+            harvestCycleCount++;
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('th-TH', { day: '2-digit', month: 'short', year: 'numeric' });
+
+            const record = {
+                cycle: harvestCycleCount,
+                icon: currentPlantIcon,
+                plantName: currentPlantNameVal,
+                daysGrown: currentMaxDays,
+                weightKg: weight,
+                qty: qty,
+                date: dateStr
+            };
+
+            harvestLog.unshift(record); // เอาไว้บนสุดของประวัติ
+            renderHarvestTable();
+            renderHarvestSummary();
+            postHarvestToServer(record); // ส่งไปเก็บถาวรที่ Raspberry Pi หากตั้งค่า API_BASE_URL ไว้
+
+            closeHarvestModal();
+            resetGrowthCycleInternal();
+            showToast(`บันทึกผลเก็บเกี่ยว ${currentPlantNameVal} เรียบร้อย! เริ่มรอบปลูกใหม่`);
+        }
+
+        // ปุ่มรีเซ็ตรอบด้วยตัวเอง (ไม่บันทึกผล) เช่น กรณีต้นไม้เสียหายก่อนเก็บเกี่ยว
+        function manualResetCycle() {
+            resetGrowthCycleInternal();
+            showToast('เริ่มรอบปลูกใหม่แล้ว (ไม่ได้บันทึกผลการเก็บเกี่ยว)');
+        }
+
+        // รีเซ็ตอายุกลับไปวันที่ 1 และซ่อนการแจ้งเตือนเก็บเกี่ยว
+        function resetGrowthCycleInternal() {
+            const slider = document.getElementById('ageSlider');
+            slider.value = 1;
+            updateAge(1);
+            document.getElementById('harvestAlert').classList.add('hidden');
+        }
+
+        // แสดง Toast แจ้งเตือนสั้นๆ
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').innerText = message;
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); }, 3000);
+        }
+
+        // วาดตารางประวัติการเก็บเกี่ยว
+        function renderHarvestTable() {
+            const tbody = document.getElementById('harvestLogBody');
+            if (harvestLog.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-sub);">ยังไม่มีการเก็บเกี่ยว</td></tr>';
+                return;
+            }
+            tbody.innerHTML = harvestLog.map(r => `
+                <tr>
+                    <td>#${r.cycle}</td>
+                    <td>${r.icon} ${r.plantName}</td>
+                    <td>${r.daysGrown} วัน</td>
+                    <td>${r.weightKg.toFixed(1)}</td>
+                    <td>${r.qty}</td>
+                    <td>${r.date}</td>
+                </tr>
+            `).join('');
+        }
+
+        // สรุปผลรวมของแต่ละชนิดพืช (จำนวนรอบ, น้ำหนักรวม, จำนวนต้นรวม, อายุเฉลี่ย)
+        function renderHarvestSummary() {
+            const grid = document.getElementById('harvestSummaryGrid');
+            if (harvestLog.length === 0) {
+                grid.innerHTML = '<p style="color: var(--text-sub); font-size: 0.9rem;">ยังไม่มีข้อมูลการเก็บเกี่ยว</p>';
+                return;
+            }
+
+            const groups = {};
+            harvestLog.forEach(r => {
+                if (!groups[r.plantName]) {
+                    groups[r.plantName] = { icon: r.icon, count: 0, totalWeight: 0, totalQty: 0, totalDays: 0 };
+                }
+                const g = groups[r.plantName];
+                g.count++;
+                g.totalWeight += r.weightKg;
+                g.totalQty += r.qty;
+                g.totalDays += r.daysGrown;
+            });
+
+            grid.innerHTML = Object.entries(groups).map(([name, g]) => `
+                <div class="summary-item">
+                    <div class="s-title">${g.icon} ${name}</div>
+                    <div class="s-row"><span>จำนวนรอบเก็บเกี่ยว</span><b>${g.count} รอบ</b></div>
+                    <div class="s-row"><span>น้ำหนักรวม</span><b>${g.totalWeight.toFixed(1)} กก.</b></div>
+                    <div class="s-row"><span>จำนวนต้นรวม</span><b>${g.totalQty} ต้น</b></div>
+                    <div class="s-row"><span>อายุเฉลี่ยต่อรอบ</span><b>${Math.round(g.totalDays / g.count)} วัน</b></div>
+                </div>
+            `).join('');
+        }
+
+        // ส่งข้อมูลการเก็บเกี่ยวไปบันทึกที่ Raspberry Pi server (ถ้าตั้งค่า API_BASE_URL ไว้)
+        async function postHarvestToServer(record) {
+            if (!API_BASE_URL) return; // โหมด demo ไม่มีเซิร์ฟเวอร์ ก็แค่เก็บในหน้านี้พอ
+            try {
+                await fetch(`${API_BASE_URL}/api/harvest`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(record)
+                });
+            } catch (err) {
+                console.warn('ไม่สามารถเชื่อมต่อ Raspberry Pi server ได้ ข้อมูลจะถูกเก็บไว้ในหน้านี้เท่านั้น', err);
+            }
+        }
+
+        // ฟังก์ชันอัปเดตสถานะแบตเตอรี่ตามเปอร์เซ็นต์ (เติมส่วนที่ขาดหาย: เกณฑ์แบตต่ำ)
+        function updateBatteryStatus(percent) {
+            const badge = document.getElementById('batteryStatus');
+            const barFill = document.getElementById('batteryBarFill');
+            barFill.style.width = percent + '%';
+
+            if (percent <= 20) {
+                badge.className = 'sensor-status status-warn';
+                badge.innerHTML = '⚠️ แบตเตอรี่ต่ำ ควรตรวจสอบ';
+                barFill.style.background = '#ef4444';
+            } else if (isAC) {
+                badge.className = 'sensor-status status-good';
+                badge.innerHTML = '🔌 ใช้ไฟ AC สำรอง';
+                barFill.style.background = '#10b981';
+            } else {
+                badge.className = 'sensor-status status-good';
+                badge.innerHTML = '⚡ กำลังชาร์จ (Solar)';
+                barFill.style.background = '#10b981';
+            }
+        }
+
+        // ฟังก์ชันสร้างข้อมูลจำลองสำหรับตารางรายวัน
+        function updateTable(currentDay) {
+            currentDay = parseInt(currentDay);
+            const tbody = document.getElementById('logTableBody');
+            let rowsHtml = '';
+            
+            // สร้างข้อมูลย้อนหลัง 4 วัน (เพื่อเป็นตัวอย่าง)
+            for(let i = 0; i < 4; i++) {
+                let day = currentDay - i;
+                if (day < 1) break; // ไม่ให้วันที่ติดลบ
+                
+                // สุ่มข้อมูลเล็กน้อยให้ดูสมจริง
+                let temp = (24.0 + Math.random()).toFixed(1);
+                let ph = (6.0 + (Math.random() * 0.4)).toFixed(1);
+                let ec = (1.6 + (Math.random() * 0.3)).toFixed(1);
+                let bat = 100 - Math.floor(Math.random() * 15);
+                
+                let dayText = i === 0 ? `${day} (วันนี้)` : `${day}`;
+                
+                rowsHtml += `
+                    <tr>
+                        <td>${dayText}</td>
+                        <td>${temp}</td>
+                        <td>${ph}</td>
+                        <td>${ec}</td>
+                        <td>${bat}%</td>
+                    </tr>
+                `;
+
+                // อัปเดตค่าแบตเตอรี่ล่าสุด (วันนี้) ให้สอดคล้องกับการ์ดพลังงาน
+                if (i === 0) {
+                    document.getElementById('batteryValue').innerHTML = `${bat} <span>%</span>`;
+                    updateBatteryStatus(bat);
+                }
+            }
+            
+            tbody.innerHTML = rowsHtml;
+        }
+
+        function togglePower() {
+            let btn = document.getElementById('powerBtn');
+            isAC = !isAC;
+            if (isAC) {
+                btn.innerHTML = "⚡ AC Power";
+                btn.style.borderColor = "rgba(245, 158, 11, 0.3)";
+                btn.style.color = "var(--accent-yellow)";
+            } else {
+                btn.innerHTML = "☀️ Solar Power";
+                btn.style.borderColor = "rgba(16, 185, 129, 0.3)";
+                btn.style.color = "var(--accent-green)";
+            }
+            // รีเฟรชสถานะแบตเตอรี่ตามแหล่งพลังงานที่เลือก
+            const currentPercent = parseInt(document.getElementById('batteryValue').innerText);
+            updateBatteryStatus(currentPercent);
+        }
+
+        function openChart(title, dataPoints, unit) {
+            document.getElementById('modalTitle').innerText = 'กราฟสถิติ: ' + title;
+            const modal = document.getElementById('chartModal');
+            modal.style.display = 'flex';
+            
+            setTimeout(() => { modal.classList.add('show'); }, 10);
+
+            let ctx = document.getElementById('sensorChart').getContext('2d');
+            if (chartInstance) chartInstance.destroy();
+
+            let gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, 'rgba(59, 130, 246, 0.5)');
+            gradient.addColorStop(1, 'rgba(59, 130, 246, 0.0)');
+
+            chartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['08:00', '10:00', '12:00', '14:00', '16:00'],
+                    datasets: [{
+                        label: `${title} (${unit})`,
+                        data: dataPoints,
+                        borderColor: '#3b82f6',
+                        backgroundColor: gradient,
+                        borderWidth: 3,
+                        pointBackgroundColor: '#0f172a',
+                        pointBorderColor: '#3b82f6',
+                        pointBorderWidth: 2,
+                        pointRadius: 5,
+                        pointHoverRadius: 7,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: { 
+                        legend: { labels: { color: '#f8fafc', font: { size: 13 } } },
+                        tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                            titleFont: { family: 'Prompt', size: 14 },
+                            bodyFont: { family: 'Prompt', size: 13 },
+                            padding: 12,
+                            borderColor: 'rgba(255,255,255,0.1)',
+                            borderWidth: 1,
+                            displayColors: false
+                        }
+                    },
+                    scales: {
+                        y: { grid: { color: 'rgba(255, 255, 255, 0.05)', drawBorder: false }, ticks: { color: '#94a3b8' } },
+                        x: { grid: { display: false, drawBorder: false }, ticks: { color: '#94a3b8' } }
+                    }
+                }
+            });
+        }
+
+        function closeChart() {
+            const modal = document.getElementById('chartModal');
+            modal.classList.remove('show');
+            setTimeout(() => { modal.style.display = 'none'; }, 300);
+        }
+        
+        document.getElementById('chartModal').addEventListener('click', function(e) {
+            if (e.target === this) closeChart();
+        });
+
+        document.getElementById('harvestModal').addEventListener('click', function(e) {
+            if (e.target === this) closeHarvestModal();
+        });
+    </script>
+</body>
+</html>
