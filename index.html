@@ -312,49 +312,6 @@
             transform: scale(1.2);
         }
 
-        /* ปุ่มเก็บเกี่ยวและรีเซ็ต */
-        .action-buttons-container {
-            display: none;
-            justify-content: center;
-            gap: 16px;
-            margin-top: 24px;
-            animation: fadeInDown 0.4s ease;
-        }
-
-        .btn-action {
-            padding: 12px 28px;
-            border-radius: 30px;
-            border: none;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            color: white;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-harvest {
-            background: linear-gradient(135deg, #10b981, #059669);
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
-        }
-
-        .btn-harvest:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6);
-        }
-
-        .btn-reset {
-            background: linear-gradient(135deg, #3b82f6, #2563eb);
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
-        }
-
-        .btn-reset:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
-        }
-
         /* Harvest Notification Alert */
         .harvest-alert {
             background: linear-gradient(90deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.05));
@@ -636,4 +593,21 @@
 
             <div class="progress-container">
                 <div style="display: flex; justify-content: space-between; font-weight: 500; font-size: 0.95rem; margin-bottom: 5px;">
-                 
+                    <span id="progressText">ระยะการเติบโต (18 จาก 45 วัน)</span>
+                    <span id="progressPercent" style="color: var(--accent-green); font-weight: 600;">40%</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progressBar"></div>
+                </div>
+                <div class="timeline-labels">
+                    <span><small>🟢</small>เพาะเมล็ด<br><small style="color: #64748b;">(Day 1)</small></span>
+                    <span><small>🌿</small>ย้ายลงแปลง<br><small style="color: #64748b;">(Day 16)</small></span>
+                    <span><small>🥬</small>เติบโตเต็มที่<br><small style="color: #64748b;">(Day 31)</small></span>
+                    <span><small>🧺</small>เก็บเกี่ยว<br><small style="color: #64748b;" class="max-day-text">(Day 45)</small></span>
+                </div>
+            </div>
+
+            <div class="slider-control">
+                <span style="color: var(--text-sub); white-space: nowrap;">จำลองอายุ:</span>
+                <input type="range" id="ageSlider" min="1" max="45" value="18" oninput="updateAge(this.value)">
+                <span id="sliderValue" style="font-weight:
